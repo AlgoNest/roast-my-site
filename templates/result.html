@@ -3,63 +3,89 @@
 <head>
 <meta charset="UTF-8">
 <title>Website Roast Result</title>
+<script src="https://cdn.jsdelivr.net/npm/@21dev/21dev.min.js"></script>
 <style>
-  body { font-family: Arial, sans-serif; margin: 20px; }
-  h1, h2, h3 { color: #333; }
-  .section { margin-bottom: 20px; }
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(120deg, #f0f0f0, #fff8e1);
+    margin: 0; padding: 0;
+  }
+  .container {
+    max-width: 800px;
+    margin: 50px auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    padding: 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  h1 { color: #333; text-align: center; animation: fadeInDown 1s; }
+  h2 { color: #00bcd4; margin-top: 25px; }
   ul { margin-left: 20px; }
-  .cta { font-weight: bold; color: #007BFF; }
+  .cta { font-weight: bold; color: #ff5722; font-size: 1.2rem; }
+  a.back { display: block; margin-top: 30px; text-align:center; color:#00bcd4; text-decoration:none; font-weight:bold; }
+  a.back:hover { text-decoration: underline; }
+  .character {
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    width: 120px;
+    animation: float 3s infinite ease-in-out;
+  }
+
+  @keyframes fadeInDown { from {opacity:0; transform:translateY(-30px);} to {opacity:1; transform:translateY(0);} }
+  @keyframes float { 0%,100% {transform: translateY(0);} 50% {transform: translateY(-10px);} }
 </style>
 </head>
 <body>
-  <h1>Roast Result for: {{ url }}</h1>
+  <div class="container">
+    <h1 data-21dev="fadeInUp">Roast Result for: {{ url }}</h1>
 
-  <div class="section">
-    <h2>Overall Score:</h2>
-    <p>{{ roast.overall_score }}/10</p>
+    <div data-21dev="fadeIn">
+      <h2>Overall Score: {{ roast.overall_score }}/10</h2>
+
+      <h2>Main Problems:</h2>
+      <ul>
+        {% for item in roast.main_problems %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+
+      <h2>Why People Won't Convert:</h2>
+      <ul>
+        {% for item in roast.why_people_wont_convert %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+
+      <h2>Headline Fixes:</h2>
+      <ul>
+        {% for item in roast.headline_fixes %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+
+      <h2>Improved CTA:</h2>
+      <p class="cta">{{ roast.cta_fix }}</p>
+
+      <h2>Quick Wins:</h2>
+      <ul>
+        {% for item in roast.quick_wins %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+
+      <a href="/" class="back">Roast Another Website</a>
+    </div>
+
+    <img src="/static/cartoon_char.png" class="character" alt="Cartoon Character">
+
   </div>
-
-  <div class="section">
-    <h2>Main Problems:</h2>
-    <ul>
-      {% for item in roast.main_problems %}
-        <li>{{ item }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-
-  <div class="section">
-    <h2>Why People Won't Convert:</h2>
-    <ul>
-      {% for item in roast.why_people_wont_convert %}
-        <li>{{ item }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-
-  <div class="section">
-    <h2>Headline Fixes:</h2>
-    <ul>
-      {% for item in roast.headline_fixes %}
-        <li>{{ item }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-
-  <div class="section">
-    <h2>Improved CTA:</h2>
-    <p class="cta">{{ roast.cta_fix }}</p>
-  </div>
-
-  <div class="section">
-    <h2>Quick Wins:</h2>
-    <ul>
-      {% for item in roast.quick_wins %}
-        <li>{{ item }}</li>
-      {% endfor %}
-    </ul>
-  </div>
-
-  <a href="/">Roast Another Website</a>
+  <script>
+    window.addEventListener('load', () => {
+      window.$21dev.init();
+    });
+  </script>
 </body>
 </html>
