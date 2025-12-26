@@ -6,7 +6,7 @@ app = Flask(__name__)
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
-        url = request.form.get("url", "").strip()
+        url = request.form.get("url")
         if not url:
             return render_template("index.html", error="Please enter a URL")
 
