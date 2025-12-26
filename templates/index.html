@@ -3,104 +3,89 @@
 <head>
 <meta charset="UTF-8">
 <title>Website Roaster</title>
-<script src="https://cdn.jsdelivr.net/npm/@21dev/21dev.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
   body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(120deg, #f0f0f0, #e0f7fa);
-    margin: 0;
-    padding: 0;
-  }
-  .container {
-    max-width: 700px;
-    margin: 50px auto;
-    text-align: center;
-    padding: 20px;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    position: relative;
-    overflow: hidden;
-  }
-  h1 {
-    font-size: 2.5rem;
-    color: #333;
-    margin-bottom: 20px;
-    animation: fadeInDown 1s;
-  }
-  form {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    animation: fadeIn 1.5s;
-  }
-  input[type="url"] {
-    flex: 1;
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    transition: all 0.3s;
-  }
-  input[type="url"]:focus {
-    border-color: #00bcd4;
-    outline: none;
-    box-shadow: 0 0 8px rgba(0,188,212,0.3);
-  }
-  button {
-    padding: 12px 20px;
-    background: #00bcd4;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,188,212,0.4);
-  }
-  .error {
-    color: red;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  .character {
-    position: absolute;
-    bottom: -20px;
-    right: -20px;
-    width: 120px;
-    animation: float 3s infinite ease-in-out;
+    margin:0; padding:0;
+    font-family: 'Inter', sans-serif;
+    background: #F7F8FA;
+    color: #111827;
   }
 
-  @keyframes fadeInDown { from {opacity:0; transform:translateY(-30px);} to {opacity:1; transform:translateY(0);} }
-  @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
-  @keyframes float { 0%,100% {transform: translateY(0);} 50% {transform: translateY(-10px);} }
+  .container {
+    max-width: 700px;
+    margin: 80px auto;
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 40px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  form {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  input[type="url"] {
+    flex: 1;
+    padding: 14px 16px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #D1D5DB;
+    transition: all 0.2s;
+  }
+
+  input[type="url"]:focus {
+    outline: none;
+    border-color: #2563EB;
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
+  }
+
+  button {
+    background: #2563EB;
+    color: #FFFFFF;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  button:hover {
+    background: #1D4ED8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+  }
+
+  .error {
+    color: #DC2626;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
 </style>
 </head>
 <body>
-  <div class="container" id="container">
-    <h1 data-21dev="fadeInUp">Website Roaster</h1>
-
-    <form method="POST" data-21dev="fadeIn">
+  <div class="container">
+    <h1>Website Roaster</h1>
+    <form method="POST">
       <input type="url" name="url" placeholder="Enter website URL" required>
       <button type="submit">Roast!</button>
     </form>
 
     {% if error %}
-      <p class="error" data-21dev="shake">{{ error }}</p>
+      <p class="error">{{ error }}</p>
     {% endif %}
-
-    <img src="/static/cartoon_char.png" class="character" alt="Cartoon Character">
-
   </div>
-  <script>
-    // Initialize 21dev animations
-    window.addEventListener('load', () => {
-      window.$21dev.init();
-    });
-  </script>
 </body>
 </html>
