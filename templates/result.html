@@ -5,40 +5,62 @@
 <title>Roast Result</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  body { margin:0; padding:0; font-family:'Inter',sans-serif; background:#F7F8FA; color:#111827; }
-  .container { max-width:800px; margin:80px auto; background:#fff; border-radius:12px; padding:40px; box-shadow:0 8px 24px rgba(0,0,0,0.05); }
-  h1 { font-size:2.2rem; font-weight:700; margin-bottom:20px; text-align:center; }
-  h2 { font-size:1.2rem; font-weight:600; color:#2563EB; margin-top:24px; }
+  body { margin:0; padding:0; font-family:'Inter',sans-serif; background:#F9FAFB; color:#111827; scroll-behavior: smooth; }
+  main { max-width: 900px; margin: 80px auto; background:#fff; padding:40px; border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,0.05); }
+  h1 { font-size:2.2rem; font-weight:700; margin-bottom:24px; text-align:center; }
+  h2 { font-size:1.25rem; font-weight:600; color:#2563EB; margin-top:24px; }
   ul { margin-left:20px; margin-top:8px; }
   li { padding:4px 0; }
   .cta { font-weight:700; color:#10B981; font-size:1.1rem; margin-top:12px; display:block; }
-  a.back { display:block; margin-top:30px; text-align:center; color:#2563EB; text-decoration:none; font-weight:600; }
+  a.back { display:block; margin-top:40px; text-align:center; color:#2563EB; text-decoration:none; font-weight:600; }
   a.back:hover { text-decoration:underline; }
+
+  /* All URLs at bottom */
+  .site-urls {
+    font-size:0.75rem;
+    color:#6B7280;
+    margin-top:60px;
+    border-top:1px solid #E5E7EB;
+    padding-top:20px;
+  }
+
 </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Roast Result for: {{ url }}</h1>
 
-    <h2>Overall Score:</h2>
-    <p>{{ roast.overall_score }}/10</p>
+<main>
+  <h1>Roast Result for: {{ url }}</h1>
 
-    <h2>Main Problems:</h2>
-    <ul>{% for item in roast.main_problems %}<li>{{ item }}</li>{% endfor %}</ul>
+  <h2>Overall Score:</h2>
+  <p>{{ roast.overall_score }}/10</p>
 
-    <h2>Why People Won't Convert:</h2>
-    <ul>{% for item in roast.why_people_wont_convert %}<li>{{ item }}</li>{% endfor %}</ul>
+  <h2>Main Problems:</h2>
+  <ul>{% for item in roast.main_problems %}<li>{{ item }}</li>{% endfor %}</ul>
 
-    <h2>Headline Fixes:</h2>
-    <ul>{% for item in roast.headline_fixes %}<li>{{ item }}</li>{% endfor %}</ul>
+  <h2>Why People Won't Convert:</h2>
+  <ul>{% for item in roast.why_people_wont_convert %}<li>{{ item }}</li>{% endfor %}</ul>
 
-    <h2>Improved CTA:</h2>
-    <p class="cta">{{ roast.cta_fix }}</p>
+  <h2>Headline Fixes:</h2>
+  <ul>{% for item in roast.headline_fixes %}<li>{{ item }}</li>{% endfor %}</ul>
 
-    <h2>Quick Wins:</h2>
-    <ul>{% for item in roast.quick_wins %}<li>{{ item }}</li>{% endfor %}</ul>
+  <h2>Improved CTA:</h2>
+  <p class="cta">{{ roast.cta_fix }}</p>
 
-    <a href="/" class="back">Roast Another Website</a>
+  <h2>Quick Wins:</h2>
+  <ul>{% for item in roast.quick_wins %}<li>{{ item }}</li>{% endfor %}</ul>
+
+  <a href="/" class="back">Roast Another Website</a>
+
+  <div class="site-urls">
+    <h2>All URLs on the website:</h2>
+    <ul>
+      {% for u in roast.all_urls %}
+        <li>{{ u }}</li>
+      {% endfor %}
+    </ul>
   </div>
+
+</main>
+
 </body>
 </html>
