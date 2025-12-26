@@ -2,90 +2,43 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Website Roast Result</title>
-<script src="https://cdn.jsdelivr.net/npm/@21dev/21dev.min.js"></script>
+<title>Roast Result</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-  body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(120deg, #f0f0f0, #fff8e1);
-    margin: 0; padding: 0;
-  }
-  .container {
-    max-width: 800px;
-    margin: 50px auto;
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-    padding: 30px;
-    position: relative;
-    overflow: hidden;
-  }
-  h1 { color: #333; text-align: center; animation: fadeInDown 1s; }
-  h2 { color: #00bcd4; margin-top: 25px; }
-  ul { margin-left: 20px; }
-  .cta { font-weight: bold; color: #ff5722; font-size: 1.2rem; }
-  a.back { display: block; margin-top: 30px; text-align:center; color:#00bcd4; text-decoration:none; font-weight:bold; }
-  a.back:hover { text-decoration: underline; }
-  .character {
-    position: absolute;
-    bottom: -20px;
-    left: -20px;
-    width: 120px;
-    animation: float 3s infinite ease-in-out;
-  }
-
-  @keyframes fadeInDown { from {opacity:0; transform:translateY(-30px);} to {opacity:1; transform:translateY(0);} }
-  @keyframes float { 0%,100% {transform: translateY(0);} 50% {transform: translateY(-10px);} }
+  body { margin:0; padding:0; font-family:'Inter',sans-serif; background:#F7F8FA; color:#111827; }
+  .container { max-width:800px; margin:80px auto; background:#fff; border-radius:12px; padding:40px; box-shadow:0 8px 24px rgba(0,0,0,0.05); }
+  h1 { font-size:2.2rem; font-weight:700; margin-bottom:20px; text-align:center; }
+  h2 { font-size:1.2rem; font-weight:600; color:#2563EB; margin-top:24px; }
+  ul { margin-left:20px; margin-top:8px; }
+  li { padding:4px 0; }
+  .cta { font-weight:700; color:#10B981; font-size:1.1rem; margin-top:12px; display:block; }
+  a.back { display:block; margin-top:30px; text-align:center; color:#2563EB; text-decoration:none; font-weight:600; }
+  a.back:hover { text-decoration:underline; }
 </style>
 </head>
 <body>
   <div class="container">
-    <h1 data-21dev="fadeInUp">Roast Result for: {{ url }}</h1>
+    <h1>Roast Result for: {{ url }}</h1>
 
-    <div data-21dev="fadeIn">
-      <h2>Overall Score: {{ roast.overall_score }}/10</h2>
+    <h2>Overall Score:</h2>
+    <p>{{ roast.overall_score }}/10</p>
 
-      <h2>Main Problems:</h2>
-      <ul>
-        {% for item in roast.main_problems %}
-          <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
+    <h2>Main Problems:</h2>
+    <ul>{% for item in roast.main_problems %}<li>{{ item }}</li>{% endfor %}</ul>
 
-      <h2>Why People Won't Convert:</h2>
-      <ul>
-        {% for item in roast.why_people_wont_convert %}
-          <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
+    <h2>Why People Won't Convert:</h2>
+    <ul>{% for item in roast.why_people_wont_convert %}<li>{{ item }}</li>{% endfor %}</ul>
 
-      <h2>Headline Fixes:</h2>
-      <ul>
-        {% for item in roast.headline_fixes %}
-          <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
+    <h2>Headline Fixes:</h2>
+    <ul>{% for item in roast.headline_fixes %}<li>{{ item }}</li>{% endfor %}</ul>
 
-      <h2>Improved CTA:</h2>
-      <p class="cta">{{ roast.cta_fix }}</p>
+    <h2>Improved CTA:</h2>
+    <p class="cta">{{ roast.cta_fix }}</p>
 
-      <h2>Quick Wins:</h2>
-      <ul>
-        {% for item in roast.quick_wins %}
-          <li>{{ item }}</li>
-        {% endfor %}
-      </ul>
+    <h2>Quick Wins:</h2>
+    <ul>{% for item in roast.quick_wins %}<li>{{ item }}</li>{% endfor %}</ul>
 
-      <a href="/" class="back">Roast Another Website</a>
-    </div>
-
-    <img src="/static/cartoon_char.png" class="character" alt="Cartoon Character">
-
+    <a href="/" class="back">Roast Another Website</a>
   </div>
-  <script>
-    window.addEventListener('load', () => {
-      window.$21dev.init();
-    });
-  </script>
 </body>
 </html>
