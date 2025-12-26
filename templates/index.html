@@ -8,84 +8,90 @@
   body {
     margin:0; padding:0;
     font-family: 'Inter', sans-serif;
-    background: #F7F8FA;
+    background: #F9FAFB;
     color: #111827;
+    scroll-behavior: smooth;
   }
 
-  .container {
-    max-width: 700px;
-    margin: 80px auto;
-    background: #FFFFFF;
-    border-radius: 12px;
-    padding: 40px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
-  }
-
-  h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 24px;
+  header {
+    width: 100%;
+    padding: 100px 20px;
+    background: linear-gradient(120deg, #FFFFFF, #F3F4F6);
     text-align: center;
   }
 
+  header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+  }
+
+  header p {
+    font-size: 1.25rem;
+    color: #6B7280;
+    margin-bottom: 40px;
+  }
+
   form {
+    max-width: 600px;
+    margin: 0 auto;
     display: flex;
     gap: 12px;
-    margin-bottom: 20px;
   }
 
   input[type="url"] {
     flex: 1;
-    padding: 14px 16px;
-    font-size: 1rem;
-    border-radius: 8px;
+    padding: 16px 20px;
+    border-radius: 12px;
     border: 1px solid #D1D5DB;
+    font-size: 1rem;
     transition: all 0.2s;
   }
 
   input[type="url"]:focus {
     outline: none;
     border-color: #2563EB;
-    box-shadow: 0 0 0 3px rgba(37,99,235,0.2);
+    box-shadow: 0 0 0 4px rgba(37,99,235,0.2);
   }
 
   button {
     background: #2563EB;
-    color: #FFFFFF;
-    padding: 14px 20px;
-    border: none;
-    border-radius: 8px;
+    color: #fff;
+    padding: 16px 28px;
+    border-radius: 12px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
+    font-size: 1rem;
   }
 
   button:hover {
     background: #1D4ED8;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(37,99,235,0.3);
   }
 
   .error {
+    margin-top: 20px;
     color: #DC2626;
     font-weight: 500;
-    margin-bottom: 10px;
-    text-align: center;
   }
-
 </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Website Roaster</h1>
-    <form method="POST">
-      <input type="url" name="url" placeholder="Enter website URL" required>
-      <button type="submit">Roast!</button>
-    </form>
 
-    {% if error %}
-      <p class="error">{{ error }}</p>
-    {% endif %}
-  </div>
+<header>
+  <h1>Website Roaster</h1>
+  <p>Analyze your website like a pro. Get a concise breakdown of issues and quick wins.</p>
+  <form method="POST">
+    <input type="url" name="url" placeholder="Enter website URL" required>
+    <button type="submit">Roast!</button>
+  </form>
+  {% if error %}
+    <p class="error">{{ error }}</p>
+  {% endif %}
+</header>
+
 </body>
 </html>
