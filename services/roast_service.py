@@ -109,20 +109,10 @@ def fallback_roast():
 def roast_url(url):
     if not is_valid_url(url):
         return {"error": "Invalid URL"}
-
     try:
         html = fetch_html(url)
-        content = extract_content(html)
-        if len(content) < 200:
-            return {"error": "Not enough readable content"}
-
-        prompt = build_prompt(content)
-        try:
-            roast = call_ai(prompt)
-        except:
-            roast = fallback_roast()
-
-        return roast
+        prompt = build_prompt(extract_content(html))
+        return call_ai(prompt)
     except Exception as e:
         return {"error": str(e)}
         
