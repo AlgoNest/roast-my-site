@@ -89,7 +89,7 @@ def get_client(api_key: str) -> OpenAI:
 
 
 def call_ai(prompt):
-     client = get_client(api_key)
+            client = get_client(api_key)
             response = client.chat.completions.create(
                 model=MODEL_NAME,
                 messages=[{"role": "user", "content": prompt}],
