@@ -5,9 +5,17 @@ from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 from openai import OpenAI
 
-BASE_URL = "https://api.aimlapi.com/v1/"
-MODEL_NAME = "google/gemma-2b-it"
-api_key = os.environ.get("AIML_API_KEY")
+API_KEYS = [
+    "8c485bc0789e4e998bc3ea2acf02b69c",
+    "d7ad2c18bb7349b49644b89bc93713bd",
+    "afa9af47c92b4f75a26643a5e26013dd",
+    "a375c0a161094aff8708070cb95d3da3",
+    "68ced62eac3c48eca9e451a63a45d2ac",
+    "e58ed952cfac4686a297e94e1174c4e7"
+]
+
+BASE_URL = "https://api.aimlapi.com/v1"
+MODEL_NAME = "google/gemma-3-12b-it"
 
 MAX_INPUT_CHARS = 3000
 AI_TIMEOUT = 8
@@ -89,7 +97,9 @@ def get_client(api_key: str) -> OpenAI:
 
 
 def call_ai(prompt):
-            client = get_client(api_key)
+    for key in API_KEYS:
+        try:
+            client = get_client(key)
             response = client.chat.completions.create(
                 model=MODEL_NAME,
                 messages=[{"role": "user", "content": prompt}],
@@ -108,6 +118,11 @@ def call_ai(prompt):
             except json.JSONDecodeError:
                 return {"error": "Invalid JSON format", "raw": content}
 
+        except Exception as e:
+            print(f"Error using key {key[:5]}...: {e}")
+            continue  # Try next key
+
+    return {"error": "All API calls failed or rate limited."}
 
 def fallback_roast():
     return {
