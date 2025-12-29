@@ -3,10 +3,11 @@ import json
 import requests
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
+import OpenAI
 
-AI_API_URL = "https://api.aimlapi.com/v1/"
+BASE_URL = "https://api.aimlapi.com/v1/"
 MODEL_NAME = "google/gemma-2b-it"
-API_KEY = os.environ.get("AIML_API_KEY")
+api_key = os.environ.get("AIML_API_KEY")
 
 MAX_INPUT_CHARS = 3000
 AI_TIMEOUT = 8
@@ -82,15 +83,31 @@ Website content:
 <<<{content}>>>
 """
 
+def get_client(api_key: str) -> OpenAI:
+    """Initialize and return an OpenAI client with the given API key."""
+    return OpenAI(base_url=BASE_URL, api_key=api_key)
+
+
 def call_ai(prompt):
-    headers = {"Authorization": f"Bearer {API_KEY}", "Content-Type": "application/json"}
-    payload = {"model": MODEL_NAME, "messages":[{"role":"user","content":prompt}],
-               "temperature":0.6, "max_tokens":300}
-    r = requests.post(AI_API_URL, headers=headers, json=payload, timeout=AI_TIMEOUT)
-    r.raise_for_status()
-    text = r.json()["choices"][0]["message"]["content"]
-    clean = text.replace("```json", "").replace("```", "").strip()
-    return json.loads(clean)
+     client = get_client(api_key)
+            response = client.chat.completions.create(
+                model=MODEL_NAME,
+                messages=[{"role": "user", "content": prompt}],
+                temperature=0.4,
+                top_p=0.8,
+                max_tokens=600,
+                timeout=20,
+            )
+
+            content = response.choices[0].message.content.strip()
+
+            try:
+                clean_text = content.replace("```json", "").replace("```", "").strip()
+                print(clean_text)
+                return json.loads(clean_text)
+            except json.JSONDecodeError:
+                return {"error": "Invalid JSON format", "raw": content}
+
 
 def fallback_roast():
     return {
