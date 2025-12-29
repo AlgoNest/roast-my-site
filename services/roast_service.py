@@ -126,28 +126,3 @@ def roast_url(url):
     except Exception as e:
         return {"error": str(e)}
         
-def extract_all_urls(html, base_url):
-    soup = BeautifulSoup(html, "html.parser")
-    urls = set()
-    for a in soup.find_all("a", href=True):
-        urls.add(urljoin(base_url, a["href"]))
-    return list(urls)
-
-def roast_url(url):
-    if not is_valid_url(url):
-        return {"error": "Invalid URL"}
-
-    try:
-        html = fetch_html(url)
-        content = extract_content(html)
-        prompt = build_prompt(content)
-        try:
-            roast = call_ai(prompt)
-        except:
-            roast = fallback_roast()
-
-        # Add all URLs at bottom
-        roast["all_urls"] = extract_all_urls(html, url)
-        return roast
-    except Exception as e:
-        return {"error": str(e)}
