@@ -3,7 +3,7 @@ import json
 import requests
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
-import OpenAI
+from openai import OpenAI
 
 BASE_URL = "https://api.aimlapi.com/v1/"
 MODEL_NAME = "google/gemma-2b-it"
