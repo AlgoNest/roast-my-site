@@ -4,7 +4,7 @@ import requests
 from urllib.parse import urlparse
 from bs4 import BeautifulSoup
 
-AI_API_URL = "https://api.aimlapi.com/v1/chat/completions"
+AI_API_URL = "https://api.aimlapi.com/v1/"
 MODEL_NAME = "google/gemma-2b-it"
 API_KEY = os.environ.get("AIML_API_KEY")
 
