@@ -146,6 +146,7 @@ def roast_url(url):
         prompt = build_prompt(extract_content(html)) 
         try: 
             roast = call_ai(prompt) 
+            return roast
         except: 
             roast = fallback_roast() 
             return roast 
