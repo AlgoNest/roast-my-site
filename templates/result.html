@@ -1,58 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Roast Result</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  body { margin:0; padding:0; font-family:'Inter',sans-serif; background:#F9FAFB; color:#111827; scroll-behavior: smooth; }
-  main { max-width: 900px; margin: 80px auto; background:#fff; padding:40px; border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,0.05); }
-  h1 { font-size:2.2rem; font-weight:700; margin-bottom:24px; text-align:center; }
-  h2 { font-size:1.25rem; font-weight:600; color:#2563EB; margin-top:24px; }
-  ul { margin-left:20px; margin-top:8px; }
-  li { padding:4px 0; }
-  .cta { font-weight:700; color:#10B981; font-size:1.1rem; margin-top:12px; display:block; }
-  a.back { display:block; margin-top:40px; text-align:center; color:#2563EB; text-decoration:none; font-weight:600; }
-  a.back:hover { text-decoration:underline; }
+  <h2>Performance Overview</h2>
+  <div class="charts">
+    <canvas id="scoreChart"></canvas>
+  </div>
 
-  /* All URLs at bottom */
-  .site-urls {
-    font-size:0.75rem;
-    color:#6B7280;
-    margin-top:60px;
-    border-top:1px solid #E5E7EB;
-    padding-top:20px;
-  }
+  <h2>Conversion Factors Breakdown</h2>
+  <div class="charts">
+    <canvas id="factorChart"></canvas>
+  </div>
 
-</style>
-</head>
-<body>
+  <h2>Main Problems</h2>
+  <ul>
+    {% for item in roast.main_problems %}
+      <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
 
-<main>
-  <h1>Roast Result for: {{ url }}</h1>
+  <h2>Why People Won't Convert</h2>
+  <ul>
+    {% for item in roast.why_people_wont_convert %}
+      <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
 
-  <h2>Overall Score:</h2>
-  <p>{{ roast.overall_score }}/10</p>
+  <h2>Headline Fixes</h2>
+  <ul>
+    {% for item in roast.headline_fixes %}
+      <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
 
-  <h2>Main Problems:</h2>
-  <ul>{% for item in roast.main_problems %}<li>{{ item }}</li>{% endfor %}</ul>
-
-  <h2>Why People Won't Convert:</h2>
-  <ul>{% for item in roast.why_people_wont_convert %}<li>{{ item }}</li>{% endfor %}</ul>
-
-  <h2>Headline Fixes:</h2>
-  <ul>{% for item in roast.headline_fixes %}<li>{{ item }}</li>{% endfor %}</ul>
-
-  <h2>Improved CTA:</h2>
+  <h2>Improved CTA</h2>
   <p class="cta">{{ roast.cta_fix }}</p>
 
-  <h2>Quick Wins:</h2>
-  <ul>{% for item in roast.quick_wins %}<li>{{ item }}</li>{% endfor %}</ul>
-
-  <a href="/" class="back">Roast Another Website</a>
+  <h2>Quick Wins</h2>
+  <ul>
+    {% for item in roast.quick_wins %}
+      <li>{{ item }}</li>
+    {% endfor %}
+  </ul>
 
   <div class="site-urls">
-    <h2>All URLs on the website:</h2>
+    <h2>All URLs on the Website</h2>
     <ul>
       {% for u in roast.all_urls %}
         <li>{{ u }}</li>
@@ -61,6 +49,78 @@
   </div>
 
 </main>
+
+<!-- ACTION BUTTONS -->
+<div class="actions">
+  <button class="pdf-btn" onclick="downloadPDF()">Download PDF</button>
+  <a href="/" class="back-link">Roast Another Website</a>
+</div>
+
+<!-- CHARTS -->
+<script>
+  const currentScore = {{ roast.overall_score }};
+  const expectedScore = 9;
+
+  new Chart(document.getElementById('scoreChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Current', 'Expected'],
+      datasets: [{
+        data: [currentScore, expectedScore],
+        backgroundColor: ['#EF4444', '#10B981'],
+        borderRadius: 8
+      }]
+    },
+    options: {
+      scales: {
+        y: { beginAtZero:true, max:10 }
+      }
+    }
+  });
+
+  new Chart(document.getElementById('factorChart'), {
+    type: 'radar',
+    data: {
+      labels: ['Clarity','Trust','UX','Copy','CTA'],
+      datasets: [
+        {
+          label:'Current',
+          data:[4,3,5,4,3],
+          backgroundColor:'rgba(239,68,68,0.2)',
+          borderColor:'#EF4444'
+        },
+        {
+          label:'Expected',
+          data:[8,8,9,8,9],
+          backgroundColor:'rgba(16,185,129,0.2)',
+          borderColor:'#10B981'
+        }
+      ]
+    },
+    options: {
+      scales: {
+        r:{ min:0, max:10 }
+      }
+    }
+  });
+</script>
+
+<!-- PDF EXPORT -->
+<script>
+  function downloadPDF() {
+    const element = document.getElementById('report');
+
+    const opt = {
+      margin:       0.5,
+      filename:     'Website-Report.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2 },
+      jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save();
+  }
+</script>
 
 </body>
 </html>
