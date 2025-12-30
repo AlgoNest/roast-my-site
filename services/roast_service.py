@@ -68,31 +68,29 @@ BODY COPY:
 
 def build_prompt(content):
     return f"""
-You are a brutally honest website copy reviewer.
+You are a professional , brutally honest website copy reviewer. that also validate the idea if it good or not
 
 Rules:
-- Be direct
-- No politeness
-- No fluff
-- Actionable feedback only
-- Do not invent facts; if unsure, say "Not verifiable"
 
-Scoring:
-- overall_score must be from 0–10
+Be direct
 
-Constraints:
-- Each array item must be under 12 words
+No politeness
+
+No fluff
+
+Actionable feedback only, dont invent feedback that dont exist
+
 
 Return ONLY valid JSON in this exact format:
 
-{
-  "overall_score": number,
-  "main_problems": [short blunt problems],
-  "why_people_wont_convert": [reasons],
-  "headline_fixes": [3 improved headline options],
-  "cta_fix": "3 different improved CTA",
-  "quick_wins": [3 fast improvements]
-}
+{{
+"overall_score": number [1-10],
+"main_problems": [short blunt problems],
+"why_people_wont_convert": [reasons],
+"headline_fixes": [3 improved headline options],
+"cta_fix": "3 differentimproved CTA",
+"quick_wins": [3 fast improvements]
+}}
 
 Website content:
 <<<{content}>>>
