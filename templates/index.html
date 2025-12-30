@@ -1,13 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Instant Website Audit – Analyze SEO, UX & Performance</title>
+<title>Your Website Is Leaking Traffic — Find Out Where</title>
 
-<meta name="description" content="Get an instant website audit covering SEO, UX, performance, and conversion issues. Identify problems and get clear, actionable improvements in seconds.">
+<meta name="description" content="Instant website audit to find SEO errors, UX friction, and performance issues costing you traffic and conversions. No signup. Results in seconds.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,46 +29,47 @@ body {
   font-family: Inter, system-ui, -apple-system, sans-serif;
   background: var(--bg);
   color: var(--text);
+  line-height: 1.6;
 }
 
 header {
-  padding: 96px 20px 80px;
+  padding: 72px 16px 64px;
   background: linear-gradient(120deg, #FFFFFF, #F3F4F6);
 }
 
 .container {
-  max-width: 880px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
 .hero {
-  text-align: center;
   max-width: 720px;
   margin: 0 auto;
+  text-align: center;
 }
 
 h1 {
-  font-size: clamp(2.4rem, 5vw, 3.2rem);
+  font-size: clamp(2rem, 6vw, 3rem);
   font-weight: 700;
-  letter-spacing: -1px;
+  letter-spacing: -0.8px;
   margin-bottom: 16px;
 }
 
 .subtitle {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   color: var(--muted);
-  line-height: 1.6;
-  margin-bottom: 40px;
+  margin-bottom: 32px;
 }
 
 form {
   display: flex;
+  flex-direction: column;
   gap: 12px;
   margin-bottom: 12px;
 }
 
 input[type="url"] {
-  flex: 1;
+  width: 100%;
   padding: 16px 18px;
   font-size: 1rem;
   border-radius: 12px;
@@ -83,7 +83,8 @@ input:focus {
 }
 
 button {
-  padding: 16px 26px;
+  padding: 16px;
+  font-size: 1rem;
   border-radius: 12px;
   border: none;
   background: var(--primary);
@@ -101,36 +102,69 @@ button:hover {
   color: var(--muted);
 }
 
+.preview {
+  margin: 32px auto 0;
+  max-width: 680px;
+}
+
+.preview img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.methodology {
+  margin-top: 12px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
 .sections {
-  margin-top: 72px;
+  margin-top: 64px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
+  grid-template-columns: 1fr;
+  gap: 20px;
 }
 
 .card {
   background: #fff;
-  padding: 28px;
+  padding: 24px;
   border-radius: 16px;
   border: 1px solid var(--border);
+  text-align: left;
 }
 
 .card h2 {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   margin-bottom: 8px;
 }
 
 .card p {
   font-size: 0.95rem;
   color: var(--muted);
-  line-height: 1.6;
 }
 
 footer {
-  margin-top: 80px;
+  margin-top: 64px;
   text-align: center;
   font-size: 0.85rem;
   color: var(--muted);
+}
+
+/* Tablet & up */
+@media (min-width: 640px) {
+  form {
+    flex-direction: row;
+  }
+
+  button {
+    padding: 16px 28px;
+    white-space: nowrap;
+  }
+
+  .sections {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 </style>
 </head>
@@ -140,54 +174,55 @@ footer {
 <header>
   <div class="container">
     <div class="hero">
-      <h1>Find What’s Breaking Your Website in 30 Seconds</h1>
+      <h1>Your Website Is Leaking Traffic — Find Out Where in 30 Seconds</h1>
+
       <p class="subtitle">
-        Our crawler checks 127+ data points across every public page and delivers an expert-grade report
-        <strong>used by 1,200+ teams</strong> to recover lost traffic and sales.
+        Scan your site for <strong>SEO errors, slow pages, broken UX, and trust killers</strong>.
+        Get a clear report showing <strong>what’s wrong, why it matters, and how to fix it</strong>.
       </p>
 
       <form method="post" action="/">
         <input type="url" name="url" placeholder="https://example.com" required aria-label="Website URL">
-        <button type="submit">Run Free Website Audit</button>
+        <button type="submit">Get My Website Audit</button>
       </form>
 
       <div class="helper">
-        No signup required · Results in seconds
+        No signup · No tracking · Results in seconds
       </div>
 
-      <picture style="display:block;margin:32px auto 0;max-width:680px">
-        <source srcset="sample-report.webp" type="image/webp">
-        <img src="sample-report.png" alt="Sample audit report showing SEO, UX and performance scores" style="width:100%;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.08)">
-      </picture>
+      <div class="helper">
+        Most sites lose <strong>10–30% traffic</strong> due to fixable issues.
+      </div>
 
-      <div style="margin-top:12px;font-size:0.8rem;color:var(--muted)">
-        Methodology: combines Google Lighthouse, W3C validator, and our private 2025 SERP benchmark dataset.
+      <div class="preview">
+        <img src="sample-report.png" alt="Website audit report preview showing issues and fixes">
+      </div>
+
+      <div class="methodology">
+        Report includes: missing meta tags, Core Web Vitals issues, slow pages,
+        broken headings, UX friction points, and conversion blockers.
       </div>
     </div>
 
     <div class="sections">
       <div class="card">
         <h2>SEO & Visibility</h2>
-        <p>Identify missing meta data, weak on-page SEO, and ranking blockers.</p>
+        <p>Find indexing issues, missing metadata, and SEO mistakes costing you rankings.</p>
       </div>
 
       <div class="card">
-        <h2>UX & Clarity</h2>
-        <p>Find confusing layouts, unclear messaging, and trust issues that stop users from converting.</p>
+        <h2>UX & Conversion</h2>
+        <p>See where users hesitate, get confused, or abandon your site.</p>
       </div>
 
       <div class="card">
         <h2>Performance & Speed</h2>
-        <p>Detect performance bottlenecks that hurt engagement and search rankings.</p>
+        <p>Detect slow pages and Core Web Vitals problems hurting traffic and sales.</p>
       </div>
     </div>
 
-    <div style="margin:48px auto 0;text-align:center;font-size:0.9rem;color:var(--muted)">
-      Trusted by <strong>1,200+</strong> teams at Shopify, Notion, and HubSpot.
-    </div>
-
     <footer>
-      Built for founders, marketers, and product teams.
+      Built for founders, marketers, and indie builders.
     </footer>
   </div>
 </header>
