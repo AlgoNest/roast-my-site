@@ -75,17 +75,24 @@ Rules:
 - No politeness
 - No fluff
 - Actionable feedback only
+- Do not invent facts; if unsure, say "Not verifiable"
+
+Scoring:
+- overall_score must be from 0–10
+
+Constraints:
+- Each array item must be under 12 words
 
 Return ONLY valid JSON in this exact format:
 
-{{
+{
   "overall_score": number,
   "main_problems": [short blunt problems],
   "why_people_wont_convert": [reasons],
   "headline_fixes": [3 improved headline options],
-  "cta_fix": "one improved CTA",
+  "cta_fix": "3 different improved CTA",
   "quick_wins": [3 fast improvements]
-}}
+}
 
 Website content:
 <<<{content}>>>
