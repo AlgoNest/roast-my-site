@@ -1,3 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Roast Result</title>
+
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- PDF Export -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<style>
+  body {
+    margin:0;
+    padding:0;
+    font-family:'Inter',sans-serif;
+    background:#F9FAFB;
+    color:#111827;
+  }
+
+  main {
+    max-width:900px;
+    margin:80px auto;
+    background:#fff;
+    padding:40px;
+    border-radius:16px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.05);
+  }
+
+  h1 {
+    font-size:2.2rem;
+    font-weight:700;
+    margin-bottom:16px;
+    text-align:center;
+  }
+
+  h2 {
+    font-size:1.25rem;
+    font-weight:600;
+    color:#2563EB;
+    margin-top:32px;
+  }
+
+  p {
+    margin-top:8px;
+  }
+
+  ul {
+    margin-left:20px;
+    margin-top:8px;
+  }
+
+  li {
+    padding:4px 0;
+  }
+
+  .cta {
+    font-weight:700;
+    color:#10B981;
+    font-size:1.1rem;
+    margin-top:12px;
+    display:block;
+  }
+
+  .charts {
+    margin:32px 0;
+  }
+
+  canvas {
+    max-width:100%;
+  }
+
+  .actions {
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    margin-top:32px;
+  }
+
+  button {
+    padding:12px 20px;
+    border-radius:10px;
+    border:none;
+    cursor:pointer;
+    font-weight:600;
+    font-size:0.95rem;
+  }
+
+  .pdf-btn {
+    background:#111827;
+    color:#fff;
+  }
+
+  .back-link {
+    background:#E5E7EB;
+    color:#111827;
+    text-decoration:none;
+    padding:12px 20px;
+    border-radius:10px;
+    font-weight:600;
+  }
+
+  .site-urls {
+    font-size:0.75rem;
+    color:#6B7280;
+    margin-top:64px;
+    border-top:1px solid #E5E7EB;
+    padding-top:24px;
+  }
+
+  /* PDF CLEANUP */
+  @media print {
+    .actions {
+      display:none;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<main id="report">
+
+  <h1>Stop Losing Traffic</h1>
+  <p style="font-size:16px;text-align:center;color:#6B7280;">
+    {{ url }} • Generated Report
+  </p>
+
+  <h2>Overall Score</h2>
+  <p><strong>{{ roast.overall_score }}/10</strong></p>
+
   <h2>Performance Overview</h2>
   <div class="charts">
     <canvas id="scoreChart"></canvas>
