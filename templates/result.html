@@ -16,107 +16,107 @@
 
 <style>
   body {
-    margin:0;
-    padding:0;
-    font-family:'Inter',sans-serif;
-    background:#F9FAFB;
-    color:#111827;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background: #F9FAFB;
+    color: #111827;
   }
 
   main {
-    max-width:900px;
-    margin:80px auto;
-    background:#fff;
-    padding:40px;
-    border-radius:16px;
-    box-shadow:0 8px 24px rgba(0,0,0,0.05);
+    max-width: 900px;
+    margin: 80px auto;
+    background: #fff;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
   }
 
   h1 {
-    font-size:2.2rem;
-    font-weight:700;
-    margin-bottom:16px;
-    text-align:center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-align: center;
   }
 
   h2 {
-    font-size:1.25rem;
-    font-weight:600;
-    color:#2563EB;
-    margin-top:32px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2563EB;
+    margin-top: 32px;
   }
 
   p {
-    margin-top:8px;
+    margin-top: 8px;
   }
 
   ul {
-    margin-left:20px;
-    margin-top:8px;
+    margin-left: 20px;
+    margin-top: 8px;
   }
 
   li {
-    padding:4px 0;
+    padding: 4px 0;
   }
 
   .cta {
-    font-weight:700;
-    color:#10B981;
-    font-size:1.1rem;
-    margin-top:12px;
-    display:block;
+    font-weight: 700;
+    color: #10B981;
+    font-size: 1.1rem;
+    margin-top: 12px;
+    display: block;
   }
 
   .charts {
-    margin:32px 0;
+    margin: 32px 0;
   }
 
   canvas {
-    max-width:100%;
+    max-width: 100%;
   }
 
   .actions {
-    display:flex;
-    justify-content:center;
-    gap:16px;
-    margin-top:32px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
   }
 
   button {
-    padding:12px 20px;
-    border-radius:10px;
-    border:none;
-    cursor:pointer;
-    font-weight:600;
-    font-size:0.95rem;
+    padding: 12px 20px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
   }
 
   .pdf-btn {
-    background:#111827;
-    color:#fff;
+    background: #111827;
+    color: #fff;
   }
 
   .back-link {
-    background:#E5E7EB;
-    color:#111827;
-    text-decoration:none;
-    padding:12px 20px;
-    border-radius:10px;
-    font-weight:600;
+    background: #E5E7EB;
+    color: #111827;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
   }
 
   .site-urls {
-    font-size:0.75rem;
-    color:#6B7280;
-    margin-top:64px;
-    border-top:1px solid #E5E7EB;
-    padding-top:24px;
+    font-size: 0.75rem;
+    color: #6B7280;
+    margin-top: 64px;
+    border-top: 1px solid #E5E7EB;
+    padding-top: 24px;
   }
 
   /* PDF CLEANUP */
   @media print {
     .actions {
-      display:none;
+      display: none;
     }
   }
 </style>
@@ -197,6 +197,7 @@
   const currentScore = {{ roast.overall_score }};
   const expectedScore = 9;
 
+  // OVERALL SCORE CHART
   new Chart(document.getElementById('scoreChart'), {
     type: 'bar',
     data: {
@@ -208,34 +209,46 @@
       }]
     },
     options: {
+      responsive: true,
+      animation: false,
       scales: {
-        y: { beginAtZero:true, max:10 }
+        y: {
+          beginAtZero: true,
+          max: 10
+        }
       }
     }
   });
 
+  // SIMPLE HORIZONTAL BAR (REPLACED RADAR)
   new Chart(document.getElementById('factorChart'), {
-    type: 'radar',
+    type: 'bar',
     data: {
-      labels: ['Clarity','Trust','UX','Copy','CTA'],
+      labels: ['Clarity', 'Trust', 'UX', 'Copy', 'CTA'],
       datasets: [
         {
-          label:'Current',
-          data:[4,3,5,4,3],
-          backgroundColor:'rgba(239,68,68,0.2)',
-          borderColor:'#EF4444'
+          label: 'Current Score',
+          data: [4, 3, 5, 4, 3],
+          backgroundColor: '#EF4444',
+          borderRadius: 6
         },
         {
-          label:'Expected',
-          data:[8,8,9,8,9],
-          backgroundColor:'rgba(16,185,129,0.2)',
-          borderColor:'#10B981'
+          label: 'Target Score',
+          data: [8, 8, 9, 8, 9],
+          backgroundColor: '#10B981',
+          borderRadius: 6
         }
       ]
     },
     options: {
+      indexAxis: 'y',
+      responsive: true,
+      animation: false,
       scales: {
-        r:{ min:0, max:10 }
+        x: {
+          beginAtZero: true,
+          max: 10
+        }
       }
     }
   });
@@ -247,14 +260,24 @@
     const element = document.getElementById('report');
 
     const opt = {
-      margin:       0.5,
-      filename:     'Website-Report.pdf',
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { scale: 2 },
-      jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+      margin: 0.5,
+      filename: 'Website-Report.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: {
+        scale: 2,
+        useCORS: true
+      },
+      jsPDF: {
+        unit: 'in',
+        format: 'a4',
+        orientation: 'portrait'
+      }
     };
 
-    html2pdf().set(opt).from(element).save();
+    // Delay ensures charts are fully rendered
+    setTimeout(() => {
+      html2pdf().set(opt).from(element).save();
+    }, 500);
   }
 </script>
 
