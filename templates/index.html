@@ -1,231 +1,496 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Your Website Is Leaking Traffic — Find Out Where</title>
-
-<meta name="description" content="Instant website audit to find SEO errors, UX friction, and performance issues costing you traffic and conversions. No signup. Results in seconds.">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-<style>
-:root {
-  --primary: #2563EB;
-  --primary-dark: #1D4ED8;
-  --bg: #F9FAFB;
-  --text: #111827;
-  --muted: #6B7280;
-  --border: #E5E7EB;
-}
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: Inter, system-ui, -apple-system, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-}
-
-header {
-  padding: 72px 16px 64px;
-  background: linear-gradient(120deg, #FFFFFF, #F3F4F6);
-}
-
-.container {
-  max-width: 960px;
-  margin: 0 auto;
-}
-
-.hero {
-  max-width: 720px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-h1 {
-  font-size: clamp(2rem, 6vw, 3rem);
-  font-weight: 700;
-  letter-spacing: -0.8px;
-  margin-bottom: 16px;
-}
-
-.subtitle {
-  font-size: 1.1rem;
-  color: var(--muted);
-  margin-bottom: 32px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 12px;
-}
-
-input[type="url"] {
-  width: 100%;
-  padding: 16px 18px;
-  font-size: 1rem;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-}
-
-input:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(37,99,235,0.15);
-}
-
-button {
-  padding: 16px;
-  font-size: 1rem;
-  border-radius: 12px;
-  border: none;
-  background: var(--primary);
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-button:hover {
-  background: var(--primary-dark);
-}
-
-.helper {
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-
-.preview {
-  margin: 32px auto 0;
-  max-width: 680px;
-}
-
-.preview img {
-  width: 100%;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-}
-
-.methodology {
-  margin-top: 12px;
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-
-.sections {
-  margin-top: 64px;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
-
-.card {
-  background: #fff;
-  padding: 24px;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  text-align: left;
-}
-
-.card h2 {
-  font-size: 1.05rem;
-  margin-bottom: 8px;
-}
-
-.card p {
-  font-size: 0.95rem;
-  color: var(--muted);
-}
-
-footer {
-  margin-top: 64px;
-  text-align: center;
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-
-/* Tablet & up */
-@media (min-width: 640px) {
-  form {
-    flex-direction: row;
-  }
-
-  button {
-    padding: 16px 28px;
-    white-space: nowrap;
-  }
-
-  .sections {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-</style>
+    <!-- Primary Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <title>Free Website Audit Tool - Find SEO Errors & Traffic Leaks in 30 Seconds</title>
+    <meta name="description" content="Free website audit tool finds SEO errors, slow pages, and conversion killers instantly. No signup required. Get actionable fixes to recover 10-30% lost traffic.">
+    <meta name="keywords" content="website audit, SEO checker, free SEO tool, website speed test, Core Web Vitals, SEO analysis, website performance">
+    <meta name="author" content="Website Audit Tool">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://roast-my-site-nine.vercel.app/">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://roast-my-site-nine.vercel.app/">
+    <meta property="og:title" content="Free Website Audit Tool - Find What's Killing Your Traffic">
+    <meta property="og:description" content="Scan your site for SEO errors, slow pages, and UX issues in 30 seconds. Free, no signup required.">
+    <meta property="og:image" content="https://roast-my-site-nine.vercel.app/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Website Audit Tool">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://roast-my-site-nine.vercel.app/">
+    <meta name="twitter:title" content="Free Website Audit Tool - Find What's Killing Your Traffic">
+    <meta name="twitter:description" content="Scan your site for SEO errors, slow pages, and UX issues in 30 seconds. Free, no signup required.">
+    <meta name="twitter:image" content="https://roast-my-site-nine.vercel.app/twitter-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#667eea">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    
+    <!-- Structured Data - Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Website Audit Tool",
+      "url": "https://roast-my-site-nine.vercel.app/",
+      "logo": "https://roast-my-site-nine.vercel.app/logo.png",
+      "description": "Free website audit tool for SEO analysis, performance testing, and UX optimization",
+      "sameAs": []
+    }
+    </script>
+    
+    <!-- Structured Data - WebApplication -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Website Audit Tool",
+      "url": "https://roast-my-site-nine.vercel.app/",
+      "description": "Free website audit tool that scans for SEO errors, slow pages, broken UX, and conversion killers in 30 seconds",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "SEO analysis and error detection",
+        "Core Web Vitals testing",
+        "UX and conversion optimization",
+        "Performance benchmarking",
+        "Instant actionable reports"
+      ],
+      "browserRequirements": "Requires JavaScript. Modern browser recommended."
+    }
+    </script>
+    
+    <!-- Structured Data - FAQPage -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is this website audit tool really free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, completely free with no signup required. We don't store your data or require payment information."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does the website audit check?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The audit scans for SEO errors (missing meta tags, broken headings), performance issues (Core Web Vitals, slow pages), and UX problems (conversion blockers, mobile issues)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does a website scan take?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most website scans complete in under 30 seconds. Complex sites may take up to 60 seconds."
+          }
+        }
+      ]
+    }
+    </script>
+    
+    <!-- Tailwind + DaisyUI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.6.0/dist/full.min.css" rel="stylesheet" type="text/css" />
+    
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
+<body class="bg-gradient-to-br from-slate-50 via-purple-50 to-slate-50 min-h-screen">
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-primary text-white px-4 py-2 rounded">
+        Skip to main content
+    </a>
 
-<body>
+    <!-- Header with structured navigation -->
+    <header role="banner" class="max-w-6xl mx-auto px-4 pt-4">
+        <nav role="navigation" aria-label="Main navigation">
+            <h1 class="sr-only">Website Audit Tool - Free SEO and Performance Scanner</h1>
+        </nav>
+    </header>
 
-<header>
-  <div class="container">
-    <div class="hero">
-      <h1>Your Website Is Leaking Traffic — Find Out Where in 30 Seconds</h1>
+    <!-- Main Content -->
+    <main id="main-content" role="main" class="max-w-6xl mx-auto px-4 py-12 sm:py-20">
+        <!-- Hero Section -->
+        <section aria-labelledby="hero-heading" class="text-center mb-16 animate-fade-in-up">
+            <div class="inline-block mb-4">
+                <span class="badge badge-lg badge-primary gap-2" role="status">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    Free Forever
+                </span>
+            </div>
+            
+            <h2 id="hero-heading" class="text-5xl sm:text-7xl font-extrabold mb-6">
+                Your Website Is <br/>
+                <span class="gradient-text">Losing Traffic</span>
+            </h2>
+            
+            <p class="text-xl sm:text-2xl text-gray-600 max-w-2xl mx-auto mb-12">
+                Find SEO errors, slow pages, and conversion killers in 30 seconds
+            </p>
 
-      <p class="subtitle">
-        Scan your site for <strong>SEO errors, slow pages, broken UX, and trust killers</strong>.
-        Get a clear report showing <strong>what’s wrong, why it matters, and how to fix it</strong>.
-      </p>
+            <!-- Scan Form -->
+            <article class="card glass-card shadow-2xl max-w-2xl mx-auto hover-lift">
+                <div class="card-body p-6 sm:p-8">
+                    <form id="scanForm" class="space-y-4" role="search" aria-label="Website URL scanner" method="post" action="/">
+                        <div class="join w-full">
+                            <label for="urlInput" class="sr-only">Enter website URL to scan</label>
+                            <input 
+                                type="url" 
+                                id="urlInput"
+                                name="url"
+                                placeholder="https://yourwebsite.com" 
+                                required
+                                aria-required="true"
+                                aria-describedby="scan-description"
+                                class="input input-bordered input-lg join-item w-full focus:outline-offset-0"
+                            >
+                            <button type="submit" class="btn btn-primary btn-lg join-item" aria-label="Start website scan">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                </svg>
+                                Scan
+                            </button>
+                        </div>
+                        <p id="scan-description" class="text-sm text-gray-500">No signup · No tracking · Results instantly</p>
+                    </form>
 
-      <form method="post" action="/">
-        <input type="url" name="url" placeholder="https://example.com" required aria-label="Website URL">
-        <button type="submit">Get My Website Audit</button>
-      </form>
+                    <!-- Demo Links -->
+                    <div class="divider text-xs" aria-hidden="true">OR TRY A DEMO</div>
+                    <div class="flex flex-wrap gap-2 justify-center" role="group" aria-label="Demo website examples">
+                        <button class="btn btn-sm btn-ghost demo-btn" aria-label="Scan demo slow loading website">🐌 Slow Site</button>
+                        <button class="btn btn-sm btn-ghost demo-btn" aria-label="Scan demo website with missing SEO">📉 Missing SEO</button>
+                        <button class="btn btn-sm btn-ghost demo-btn" aria-label="Scan demo website with poor mobile UX">📱 Poor Mobile</button>
+                    </div>
+                </div>
+            </article>
+        </section>
 
-      <div class="helper">
-        No signup · No tracking · Results in seconds
-      </div>
+        <!-- Stats Section -->
+        <section aria-labelledby="stats-heading" class="stats stats-vertical sm:stats-horizontal shadow-lg w-full mb-16 glass-card">
+            <h2 id="stats-heading" class="sr-only">Website Audit Tool Statistics</h2>
+            <div class="stat place-items-center">
+                <div class="stat-value text-primary">10-30%</div>
+                <div class="stat-desc">Traffic lost to fixable issues</div>
+            </div>
+            <div class="stat place-items-center">
+                <div class="stat-value text-secondary">&lt;30s</div>
+                <div class="stat-desc">Complete audit time</div>
+            </div>
+            <div class="stat place-items-center">
+                <div class="stat-value text-accent">100%</div>
+                <div class="stat-desc">Free, always</div>
+            </div>
+        </section>
 
-      <div class="helper">
-        Most sites lose <strong>10–30% traffic</strong> due to fixable issues.
-      </div>
+        <!-- Sample Report Section -->
+        <section aria-labelledby="report-heading" class="card glass-card shadow-2xl mb-16 hover-lift">
+            <div class="card-body">
+                <h2 id="report-heading" class="card-title text-2xl mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Sample Report Preview
+                </h2>
+                
+                <div class="space-y-4">
+                    <!-- Critical Alert -->
+                    <div role="alert" class="alert alert-error shadow-lg" aria-live="polite">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <span class="badge badge-error">CRITICAL</span>
+                                <span class="font-semibold">3 Issues</span>
+                            </div>
+                            <p class="text-sm mt-1">Missing meta description blocks indexing</p>
+                            <p class="text-xs opacity-80 mt-1">💸 Impact: -15% organic traffic</p>
+                        </div>
+                    </div>
 
-      <div class="preview">
-        <img src="sample-report.png" alt="Website audit report preview showing issues and fixes">
-      </div>
+                    <!-- Warning Alert -->
+                    <div role="alert" class="alert alert-warning shadow-lg" aria-live="polite">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <span class="badge badge-warning">HIGH</span>
+                                <span class="font-semibold">7 Issues</span>
+                            </div>
+                            <p class="text-sm mt-1">Largest Contentful Paint: 4.2s (should be &lt;2.5s)</p>
+                            <p class="text-xs opacity-80 mt-1">📉 Impact: -22% mobile conversions</p>
+                        </div>
+                    </div>
 
-      <div class="methodology">
-        Report includes: missing meta tags, Core Web Vitals issues, slow pages,
-        broken headings, UX friction points, and conversion blockers.
-      </div>
-    </div>
+                    <!-- Info Alert -->
+                    <div role="alert" class="alert alert-info shadow-lg" aria-live="polite">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <span class="badge badge-info">MEDIUM</span>
+                                <span class="font-semibold">12 Issues</span>
+                            </div>
+                            <p class="text-sm mt-1">Images without alt text</p>
+                            <p class="text-xs opacity-80 mt-1">♿ Impact: -5% accessibility score</p>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="sections">
-      <div class="card">
-        <h2>SEO & Visibility</h2>
-        <p>Find indexing issues, missing metadata, and SEO mistakes costing you rankings.</p>
-      </div>
+                <div class="divider" aria-hidden="true"></div>
+                
+                <div class="alert shadow-lg" role="status">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-info shrink-0 w-6 h-6" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>
+                        <strong>Total estimated traffic loss: 18-25%</strong> from fixable issues
+                    </span>
+                </div>
+            </div>
+        </section>
 
-      <div class="card">
-        <h2>UX & Conversion</h2>
-        <p>See where users hesitate, get confused, or abandon your site.</p>
-      </div>
+        <!-- Features Section -->
+        <section aria-labelledby="features-heading" class="grid md:grid-cols-3 gap-6 mb-16">
+            <h2 id="features-heading" class="sr-only">Key Features of Website Audit Tool</h2>
+            
+            <article class="card glass-card shadow-lg hover-lift">
+                <div class="card-body items-center text-center">
+                    <div class="avatar placeholder mb-4">
+                        <div class="bg-primary text-primary-content rounded-full w-16" aria-hidden="true">
+                            <span class="text-2xl">🔍</span>
+                        </div>
+                    </div>
+                    <h3 class="card-title">SEO & Visibility</h3>
+                    <p class="text-sm text-gray-600">Missing meta tags, broken headings, indexation blockers, ranking killers</p>
+                </div>
+            </article>
 
-      <div class="card">
-        <h2>Performance & Speed</h2>
-        <p>Detect slow pages and Core Web Vitals problems hurting traffic and sales.</p>
-      </div>
-    </div>
+            <article class="card glass-card shadow-lg hover-lift">
+                <div class="card-body items-center text-center">
+                    <div class="avatar placeholder mb-4">
+                        <div class="bg-secondary text-secondary-content rounded-full w-16" aria-hidden="true">
+                            <span class="text-2xl">✨</span>
+                        </div>
+                    </div>
+                    <h3 class="card-title">UX & Conversion</h3>
+                    <p class="text-sm text-gray-600">Friction points, confusing flows, mobile tap issues, conversion blockers</p>
+                </div>
+            </article>
 
-    <footer>
-      Built for founders, marketers, and indie builders.
+            <article class="card glass-card shadow-lg hover-lift">
+                <div class="card-body items-center text-center">
+                    <div class="avatar placeholder mb-4">
+                        <div class="bg-accent text-accent-content rounded-full w-16" aria-hidden="true">
+                            <span class="text-2xl">⚡</span>
+                        </div>
+                    </div>
+                    <h3 class="card-title">Performance</h3>
+                    <p class="text-sm text-gray-600">Core Web Vitals, slow resources, render-blocking scripts, load bottlenecks</p>
+                </div>
+            </article>
+        </section>
+
+        <!-- Comparison Table Section -->
+        <section aria-labelledby="comparison-heading" class="card glass-card shadow-2xl mb-16">
+            <div class="card-body">
+                <h2 id="comparison-heading" class="card-title text-2xl mb-6">vs. Other Free Tools</h2>
+                <div class="overflow-x-auto">
+                    <table class="table table-zebra" role="table" aria-label="Feature comparison with other SEO tools">
+                        <thead>
+                            <tr>
+                                <th scope="col">Feature</th>
+                                <th scope="col" class="text-center">This Tool</th>
+                                <th scope="col" class="text-center">Lighthouse</th>
+                                <th scope="col" class="text-center">PageSpeed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>SEO + UX + Performance</td>
+                                <td class="text-center">
+                                    <span class="badge badge-success" aria-label="Supported">✓</span>
+                                </td>
+                                <td class="text-center text-gray-400">Performance only</td>
+                                <td class="text-center text-gray-400">Performance only</td>
+                            </tr>
+                            <tr>
+                                <td>Traffic impact estimates</td>
+                                <td class="text-center">
+                                    <span class="badge badge-success" aria-label="Supported">✓</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge badge-ghost" aria-label="Not supported">—</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge badge-ghost" aria-label="Not supported">—</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Copy-paste fixes</td>
+                                <td class="text-center">
+                                    <span class="badge badge-success" aria-label="Supported">✓</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge badge-ghost" aria-label="Not supported">—</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge badge-ghost" aria-label="Not supported">—</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>No signup required</td>
+                                <td class="text-center">
+                                    <span class="badge badge-success" aria-label="Supported">✓</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge badge-success" aria-label="Supported">✓</span>
+                                </td>
+                                <td class="text-center">
+                                    <span class="badge badge-success" aria-label="Supported">✓</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section aria-labelledby="cta-heading" class="hero bg-gradient-to-r from-primary to-secondary rounded-3xl shadow-2xl">
+            <div class="hero-content text-center text-neutral-content py-12">
+                <div class="max-w-md">
+                    <h2 id="cta-heading" class="text-3xl font-bold mb-4">Built for Founders</h2>
+                    <p class="mb-6 opacity-90">No marketing budget? No problem. Find and fix traffic killers in minutes.</p>
+                    <button onclick="document.getElementById('urlInput').focus(); window.scrollTo({top: 0, behavior: 'smooth'});" class="btn btn-lg btn-neutral" aria-label="Scroll to scan form">
+                        Scan Your Site Now
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer role="contentinfo" class="footer footer-center p-10 bg-base-200 text-base-content rounded-t-3xl mt-16">
+        <div>
+            <p class="font-bold">No data stored · No tracking · No BS</p>
+            <p class="text-sm opacity-60">Built with care for indie makers</p>
+        </div>
     </footer>
-  </div>
-</header>
 
+    <script>
+        // Fade in animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .stats').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Form submission
+        document.getElementById('scanForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const url = document.getElementById('urlInput').value;
+            // Replace with your actual endpoint
+            window.location.href = `/scan?url=${encodeURIComponent(url)}`;
+        });
+
+        // Demo buttons
+        const demoUrls = {
+            'Slow Site': 'https://slow-demo.example.com',
+            'Missing SEO': 'https://no-seo-demo.example.com',
+            'Poor Mobile': 'https://mobile-issue-demo.example.com'
+        };
+
+        document.querySelectorAll('.demo-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const demoType = this.textContent.trim().substring(2);
+                alert(`Demo: ${demoType}\nIntegrate with your backend`);
+            });
+        });
+    </script>
 </body>
 </html>
