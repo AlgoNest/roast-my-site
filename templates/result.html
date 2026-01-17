@@ -1,283 +1,471 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<title>Roast Result</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audit Results - {{ url }}</title>
 
-<!-- Font -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- DaisyUI -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.6.0/dist/full.min.css" rel="stylesheet" />
 
 <!-- PDF Export -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <style>
-  body {
-    margin: 0;
-    padding: 0;
+  * {
     font-family: 'Inter', sans-serif;
-    background: #F9FAFB;
-    color: #111827;
+  }
+  
+  .gradient-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+  
+  .score-circle {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: conic-gradient(
+      #10B981 0% calc(var(--score) * 10%),
+      #E5E7EB calc(var(--score) * 10%) 100%
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .score-circle::before {
+    content: '';
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: white;
+  }
+  
+  .score-text {
+    position: relative;
+    z-index: 1;
+    font-size: 3rem;
+    font-weight: 800;
   }
 
-  main {
-    max-width: 900px;
-    margin: 80px auto;
-    background: #fff;
-    padding: 40px;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+  @media print {
+    .no-print { display: none !important; }
+    .collapse { display: block !important; }
+    .collapse-content { 
+      display: block !important; 
+      max-height: none !important;
+      overflow: visible !important;
+    }
+    .no-print-link svg { display: none; }
+    body { background: white; }
+    .page-break-before { page-break-before: always; }
+    .page-break-after { page-break-after: always; }
+    .card { page-break-inside: avoid; }
   }
-
-  h1 {
-    font-size: 2.2rem;
-    font-weight: 700;
-    margin-bottom: 16px;
-    text-align: center;
-  }
-
-  h2 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #2563EB;
-    margin-top: 32px;
-  }
-
-  p {
-    margin-top: 8px;
-  }
-
-  ul {
-    margin-left: 20px;
-    margin-top: 8px;
-  }
-
-  li {
-    padding: 4px 0;
-  }
-
-  .cta {
-    font-weight: 700;
-    color: #10B981;
-    font-size: 1.1rem;
-    margin-top: 12px;
-    display: block;
-  }
-
-  .charts {
-    margin: 32px 0;
-  }
-
+  
+  /* Ensure charts render in PDF */
   canvas {
     max-width: 100%;
+    height: auto;
   }
-
-  .actions {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    margin-top: 32px;
-  }
-
-  button {
-    padding: 12px 20px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 0.95rem;
-  }
-
-  .pdf-btn {
-    background: #111827;
-    color: #fff;
-  }
-
-  .back-link {
-    background: #E5E7EB;
-    color: #111827;
-    text-decoration: none;
-    padding: 12px 20px;
-    border-radius: 10px;
-    font-weight: 600;
-  }
-
-  .site-urls {
-    font-size: 0.75rem;
-    color: #6B7280;
-    margin-top: 64px;
-    border-top: 1px solid #E5E7EB;
-    padding-top: 24px;
-  }
-
-  /* PDF CLEANUP */
-  @media print {
-    .actions {
-      display: none;
-    }
+  
+  /* PDF-specific styling */
+  @page {
+    margin: 0.5in;
   }
 </style>
 </head>
 
-<body>
+<body class="bg-gradient-to-br from-slate-50 via-purple-50 to-slate-50 min-h-screen">
 
-<main id="report">
+<!-- Header -->
+<div class="no-print navbar bg-base-100 shadow-lg sticky top-0 z-50">
+  <div class="navbar-start">
+    <a href="/" class="btn btn-ghost text-xl">← Scan Another</a>
+  </div>
+  <div class="navbar-end gap-2">
+    <button onclick="window.print()" class="btn btn-ghost btn-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+      </svg>
+      Print
+    </button>
+    <button onclick="downloadPDF()" class="btn btn-primary btn-sm">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      PDF
+    </button>
+  </div>
+</div>
 
-  <h1>Stop Losing Traffic</h1>
-  <p style="font-size:16px;text-align:center;color:#6B7280;">
-    {{ url }} • Generated Report
-  </p>
+<main id="report" class="max-w-6xl mx-auto px-4 py-12">
 
-  <h2>Overall Score</h2>
-  <p><strong>{{ roast.overall_score }}/10</strong></p>
-
-  <h2>Performance Overview</h2>
-  <div class="charts">
-    <canvas id="scoreChart"></canvas>
+  <!-- Hero Section -->
+  <div class="card bg-white shadow-2xl mb-8">
+    <div class="card-body">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="flex-1">
+          <div class="badge badge-primary mb-2">Website Audit</div>
+          <h1 class="text-4xl font-bold mb-2">Traffic Leak Report</h1>
+          <p class="text-gray-600">{{ url }}</p>
+          <div class="mt-4 flex gap-2">
+            <div class="badge badge-outline">Generated {{ "now"|default("recently") }}</div>
+          </div>
+        </div>
+        
+        <div class="score-circle" style="--score: {{ roast.overall_score }}">
+          <div class="score-text">{{ roast.overall_score }}<span class="text-2xl text-gray-400">/10</span></div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <h2>Conversion Factors Breakdown</h2>
-  <div class="charts">
-    <canvas id="factorChart"></canvas>
+  <!-- Critical Issues Alert -->
+  {% if roast.main_problems %}
+  <div role="alert" class="alert alert-error mb-8 shadow-lg">
+    <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <div>
+      <h3 class="font-bold">{{ roast.main_problems|length }} Critical Issues Found</h3>
+      <div class="text-sm">These are costing you traffic right now</div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Two Column Layout -->
+  <div class="grid lg:grid-cols-2 gap-8 mb-8">
+    
+    <!-- Left Column -->
+    <div class="space-y-6">
+      
+      <!-- Main Problems -->
+      <div class="card bg-white shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title text-2xl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-error" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            Main Problems
+          </h2>
+          <div class="space-y-3">
+            {% for item in roast.main_problems %}
+            <div class="flex gap-3 p-3 bg-error/10 rounded-lg">
+              <span class="text-error font-bold text-xl">•</span>
+              <p class="flex-1 text-sm">{{ item }}</p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Conversion Blockers -->
+      <div class="card bg-white shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title text-2xl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-warning" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+            </svg>
+            Why Visitors Leave
+          </h2>
+          <div class="space-y-2">
+            {% for item in roast.why_people_wont_convert %}
+            <div class="flex gap-2 items-start">
+              <span class="text-warning text-lg">⚠</span>
+              <p class="text-sm text-gray-700">{{ item }}</p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Column -->
+    <div class="space-y-6">
+      
+      <!-- Performance Chart -->
+      <div class="card bg-white shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title text-2xl mb-4">Performance Breakdown</h2>
+          <canvas id="factorChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Quick Wins -->
+      <div class="card bg-gradient-to-br from-success to-success/80 text-white shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title text-2xl text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+            Quick Wins (Fix First)
+          </h2>
+          <div class="space-y-2">
+            {% for item in roast.quick_wins %}
+            <div class="flex gap-2 items-start bg-white/20 p-3 rounded-lg">
+              <span class="text-2xl">✓</span>
+              <p class="text-sm">{{ item }}</p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 
-  <h2>Main Problems</h2>
-  <ul>
-    {% for item in roast.main_problems %}
-      <li>{{ item }}</li>
-    {% endfor %}
-  </ul>
+  <!-- Full Width Sections -->
+  <div class="space-y-8">
 
-  <h2>Why People Won't Convert</h2>
-  <ul>
-    {% for item in roast.why_people_wont_convert %}
-      <li>{{ item }}</li>
-    {% endfor %}
-  </ul>
+    <!-- Headline Fixes -->
+    <div class="card bg-white shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title text-2xl mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-info" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          </svg>
+          Headline Improvements
+        </h2>
+        <div class="grid md:grid-cols-2 gap-4">
+          {% for item in roast.headline_fixes %}
+          <div class="p-4 bg-info/10 rounded-lg border-l-4 border-info">
+            <p class="text-sm">{{ item }}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
 
-  <h2>Headline Fixes</h2>
-  <ul>
-    {% for item in roast.headline_fixes %}
-      <li>{{ item }}</li>
-    {% endfor %}
-  </ul>
+    <!-- CTA Fix -->
+    <div class="card bg-gradient-to-r from-primary to-secondary text-white shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title text-2xl text-white mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+          </svg>
+          Improved Call-to-Action
+        </h2>
+        <div class="bg-white/20 p-6 rounded-lg">
+          <p class="text-2xl font-bold">{{ roast.cta_fix }}</p>
+        </div>
+        <p class="text-sm text-white/80 mt-2">Copy this exact text to your main CTA button</p>
+      </div>
+    </div>
 
-  <h2>Improved CTA</h2>
-  <p class="cta">{{ roast.cta_fix }}</p>
+    <!-- Score Comparison -->
+    <div class="card bg-white shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title text-2xl mb-4">Current vs. Target Score</h2>
+        <canvas id="scoreChart"></canvas>
+      </div>
+    </div>
 
-  <h2>Quick Wins</h2>
-  <ul>
-    {% for item in roast.quick_wins %}
-      <li>{{ item }}</li>
-    {% endfor %}
-  </ul>
+  </div>
 
-  <div class="site-urls">
-    <h2>All URLs on the Website</h2>
-    <ul>
-      {% for u in roast.all_urls %}
-        <li>{{ u }}</li>
-      {% endfor %}
-    </ul>
+  <!-- URL List (Collapsible) -->
+  {% if roast.all_urls %}
+  <div class="collapse collapse-arrow bg-white shadow-xl mt-8" id="url-section">
+    <input type="checkbox" class="peer" /> 
+    <div class="collapse-title text-xl font-medium">
+      All Pages Scanned ({{ roast.all_urls|length }})
+      <span class="text-sm text-gray-500 ml-2">(Click to expand • Included in PDF export)</span>
+    </div>
+    <div class="collapse-content peer-checked:block"> 
+      <div class="grid md:grid-cols-2 gap-2 mt-4">
+        {% for u in roast.all_urls %}
+        <a href="{{ u }}" target="_blank" class="link link-hover text-sm text-gray-600 flex items-center gap-2 no-print-link">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+          {{ u }}
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- CTA Bottom -->
+  <div class="text-center mt-12 no-print">
+    <div class="card bg-base-200 shadow-xl">
+      <div class="card-body items-center">
+        <h3 class="text-2xl font-bold mb-2">Ready to Fix These Issues?</h3>
+        <p class="text-gray-600 mb-4">Start with Quick Wins to see immediate traffic improvements</p>
+        <div class="flex gap-4">
+          <button onclick="window.print()" class="btn btn-outline">Print Report</button>
+          <button onclick="downloadPDF()" class="btn btn-primary">Download PDF</button>
+        </div>
+      </div>
+    </div>
   </div>
 
 </main>
 
-<!-- ACTION BUTTONS -->
-<div class="actions">
-  <button class="pdf-btn" onclick="downloadPDF()">Download PDF</button>
-  <a href="/" class="back-link">Roast Another Website</a>
-</div>
-
-<!-- CHARTS -->
+<!-- Charts -->
 <script>
   const currentScore = {{ roast.overall_score }};
   const expectedScore = 9;
 
-  // OVERALL SCORE CHART
+  // Score Comparison Chart
   new Chart(document.getElementById('scoreChart'), {
     type: 'bar',
     data: {
-      labels: ['Current', 'Expected'],
+      labels: ['Current Score', 'Target Score'],
       datasets: [{
         data: [currentScore, expectedScore],
-        backgroundColor: ['#2563eb', '#10B981'],
-        borderRadius: 8
+        backgroundColor: ['#F59E0B', '#10B981'],
+        borderRadius: 12,
+        barThickness: 60
       }]
     },
     options: {
       responsive: true,
-      animation: false,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false }
+      },
       scales: {
         y: {
           beginAtZero: true,
-          max: 10
+          max: 10,
+          ticks: {
+            stepSize: 2
+          }
         }
       }
     }
   });
 
-  // SIMPLE HORIZONTAL BAR (REPLACED RADAR)
+  // Performance Breakdown
   new Chart(document.getElementById('factorChart'), {
     type: 'bar',
     data: {
       labels: ['Clarity', 'Trust', 'UX', 'Copy', 'CTA'],
       datasets: [
         {
-          label: 'Current Score',
+          label: 'Current',
           data: [4, 3, 5, 4, 3],
-          backgroundColor: '#2563eb',
-          borderRadius: 6
+          backgroundColor: '#EF4444',
+          borderRadius: 8
         },
         {
-          label: 'Target Score',
+          label: 'Target',
           data: [8, 8, 9, 8, 9],
           backgroundColor: '#10B981',
-          borderRadius: 6
+          borderRadius: 8
         }
       ]
     },
     options: {
       indexAxis: 'y',
       responsive: true,
-      animation: false,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top'
+        }
+      },
       scales: {
         x: {
           beginAtZero: true,
-          max: 10
+          max: 10,
+          ticks: {
+            stepSize: 2
+          }
         }
       }
     }
   });
+
+  // Set chart container heights
+  document.getElementById('scoreChart').style.height = '300px';
+  document.getElementById('factorChart').style.height = '300px';
 </script>
 
-<!-- PDF EXPORT -->
+<!-- PDF Export -->
 <script>
   function downloadPDF() {
-    const element = document.getElementById('report');
+    // Expand collapsed sections before PDF generation
+    const collapseInputs = document.querySelectorAll('.collapse input[type="checkbox"]');
+    const wasChecked = [];
+    collapseInputs.forEach((input, i) => {
+      wasChecked[i] = input.checked;
+      input.checked = true; // Expand all
+    });
 
+    // Hide no-print elements
+    const noPrint = document.querySelectorAll('.no-print');
+    noPrint.forEach(el => el.style.display = 'none');
+
+    // Ensure charts are visible and rendered
+    const charts = document.querySelectorAll('canvas');
+    charts.forEach(chart => {
+      chart.style.display = 'block';
+      chart.style.visibility = 'visible';
+    });
+
+    const element = document.getElementById('report');
+    
     const opt = {
-      margin: 0.5,
-      filename: 'Website-Report.pdf',
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        useCORS: true
+      margin: [0.5, 0.5, 0.5, 0.5],
+      filename: 'Website-Audit-Report-{{ url|replace("https://", "")|replace("http://", "")|replace("/", "-")|replace(".", "-") }}.pdf',
+      image: { 
+        type: 'jpeg', 
+        quality: 0.98 
       },
-      jsPDF: {
-        unit: 'in',
-        format: 'a4',
-        orientation: 'portrait'
+      html2canvas: { 
+        scale: 2,
+        useCORS: true,
+        logging: false,
+        letterRendering: true,
+        allowTaint: true,
+        backgroundColor: '#F9FAFB'
+      },
+      jsPDF: { 
+        unit: 'in', 
+        format: 'a4', 
+        orientation: 'portrait',
+        compress: true
+      },
+      pagebreak: { 
+        mode: ['avoid-all', 'css', 'legacy'],
+        before: '.page-break-before',
+        after: '.page-break-after'
       }
     };
 
-    // Delay ensures charts are fully rendered
+    // Wait for charts to fully render, then generate PDF
     setTimeout(() => {
-      html2pdf().set(opt).from(element).save();
-    }, 500);
+      html2pdf().set(opt).from(element).save().then(() => {
+        // Restore no-print elements
+        noPrint.forEach(el => el.style.display = '');
+        
+        // Restore collapse states
+        collapseInputs.forEach((input, i) => {
+          input.checked = wasChecked[i];
+        });
+      }).catch(err => {
+        console.error('PDF generation failed:', err);
+        alert('Failed to generate PDF. Please try again.');
+        
+        // Restore elements even on error
+        noPrint.forEach(el => el.style.display = '');
+        collapseInputs.forEach((input, i) => {
+          input.checked = wasChecked[i];
+        });
+      });
+    }, 800); // Increased delay to ensure chart rendering
   }
 </script>
 
