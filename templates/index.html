@@ -199,13 +199,13 @@
             <!-- Scan Form -->
             <article class="card glass-card shadow-2xl max-w-2xl mx-auto hover-lift">
                 <div class="card-body p-6 sm:p-8">
-                    <form method="post"  class="space-y-4" aria-label="Website URL scanner" action="/">
+                    <form id="scanForm" method="post" action="/" class="space-y-4" role="search" aria-label="Website URL scanner">
                         <div class="join w-full">
                             <label for="urlInput" class="sr-only">Enter website URL to scan</label>
                             <input 
                                 type="url" 
                                 id="urlInput"
-                                name="url"
+                                name="website-url"
                                 placeholder="https://yourwebsite.com" 
                                 required
                                 aria-required="true"
@@ -470,25 +470,22 @@
             observer.observe(el);
         });
 
-        // Form submission
-        document.getElementById('scanForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const url = document.getElementById('urlInput').value;
-            // Replace with your actual endpoint
-            window.location.href = `/scan?url=${encodeURIComponent(url)}`;
-        });
-
         // Demo buttons
-        const demoUrls = {
-            'Slow Site': 'https://slow-demo.example.com',
-            'Missing SEO': 'https://no-seo-demo.example.com',
-            'Poor Mobile': 'https://mobile-issue-demo.example.com'
-        };
-
         document.querySelectorAll('.demo-btn').forEach(btn => {
             btn.addEventListener('click', function() {
-                const demoType = this.textContent.trim().substring(2);
-                alert(`Demo: ${demoType}\nIntegrate with your backend`);
+                const demoUrls = {
+                    '🐌 Slow Site': 'https://example-slow-site.com',
+                    '📉 Missing SEO': 'https://example-no-seo.com',
+                    '📱 Poor Mobile': 'https://example-mobile-issues.com'
+                };
+                
+                const demoType = this.textContent.trim();
+                const demoUrl = demoUrls[demoType];
+                
+                if (demoUrl) {
+                    document.getElementById('urlInput').value = demoUrl;
+                    document.getElementById('scanForm').submit();
+                }
             });
         });
     </script>
