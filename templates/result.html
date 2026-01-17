@@ -82,6 +82,31 @@
   @page {
     margin: 0.5in;
   }
+  
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    .score-circle {
+      width: 140px;
+      height: 140px;
+    }
+    
+    .score-circle::before {
+      width: 110px;
+      height: 110px;
+    }
+    
+    .score-text {
+      font-size: 2.5rem;
+    }
+    
+    #scoreChart {
+      height: 120px !important;
+    }
+    
+    #factorChart {
+      height: 140px !important;
+    }
+  }
 </style>
 </head>
 
@@ -194,11 +219,11 @@
     <!-- Right Column -->
     <div class="space-y-6">
       
-      <!-- Performance Chart -->
+      <!-- Performance Chart (Compact) -->
       <div class="card bg-white shadow-xl">
-        <div class="card-body">
-          <h2 class="card-title text-2xl mb-4">Performance Breakdown</h2>
-          <canvas id="factorChart"></canvas>
+        <div class="card-body p-4">
+          <h2 class="card-title text-lg mb-2">Performance Breakdown</h2>
+          <canvas id="factorChart" style="height: 160px;"></canvas>
         </div>
       </div>
 
@@ -265,9 +290,9 @@
 
     <!-- Score Comparison -->
     <div class="card bg-white shadow-xl">
-      <div class="card-body">
-        <h2 class="card-title text-2xl mb-4">Current vs. Target Score</h2>
-        <canvas id="scoreChart"></canvas>
+      <div class="card-body p-4">
+        <h2 class="card-title text-lg mb-2">Current vs. Target Score</h2>
+        <canvas id="scoreChart" style="height: 140px;"></canvas>
       </div>
     </div>
 
@@ -317,37 +342,39 @@
   const currentScore = {{ roast.overall_score }};
   const expectedScore = 9;
 
-  // Score Comparison Chart
+  // Score Comparison Chart (Compact)
   new Chart(document.getElementById('scoreChart'), {
     type: 'bar',
     data: {
-      labels: ['Current Score', 'Target Score'],
+      labels: ['Current', 'Target'],
       datasets: [{
         data: [currentScore, expectedScore],
         backgroundColor: ['#F59E0B', '#10B981'],
-        borderRadius: 12,
-        barThickness: 60
+        borderRadius: 8,
+        barThickness: 40
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { display: false }
+        legend: { display: false },
+        tooltip: { enabled: true }
       },
       scales: {
         y: {
           beginAtZero: true,
           max: 10,
-          ticks: {
-            stepSize: 2
-          }
+          ticks: { stepSize: 2, font: { size: 11 } }
+        },
+        x: {
+          ticks: { font: { size: 11 } }
         }
       }
     }
   });
 
-  // Performance Breakdown
+  // Performance Breakdown (Compact Horizontal)
   new Chart(document.getElementById('factorChart'), {
     type: 'bar',
     data: {
@@ -357,13 +384,13 @@
           label: 'Current',
           data: [4, 3, 5, 4, 3],
           backgroundColor: '#EF4444',
-          borderRadius: 8
+          borderRadius: 6
         },
         {
           label: 'Target',
           data: [8, 8, 9, 8, 9],
           backgroundColor: '#10B981',
-          borderRadius: 8
+          borderRadius: 6
         }
       ]
     },
@@ -373,24 +400,22 @@
       maintainAspectRatio: false,
       plugins: {
         legend: {
-          position: 'top'
+          position: 'top',
+          labels: { font: { size: 11 }, padding: 8 }
         }
       },
       scales: {
         x: {
           beginAtZero: true,
           max: 10,
-          ticks: {
-            stepSize: 2
-          }
+          ticks: { stepSize: 2, font: { size: 10 } }
+        },
+        y: {
+          ticks: { font: { size: 10 } }
         }
       }
     }
   });
-
-  // Set chart container heights
-  document.getElementById('scoreChart').style.height = '300px';
-  document.getElementById('factorChart').style.height = '300px';
 </script>
 
 <!-- PDF Export -->
